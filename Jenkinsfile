@@ -15,20 +15,18 @@ pipeline {
         
         stage('Rodar testes Cypress') {
             parallel {
-                stage('Chrome') {
+                stage('pasta 1') {
                     steps {
-                        sh 'npx cypress run --browser chrome'
+                        sh 'npm run test-started'
                     }
                 }
-        stage('Electron') {
-            steps {
-                sh 'npx cypress run --browser electron'
+                stage('pasta 2') {
+                    steps {
+                        sh 'npm run test-advanced'
+                    }
+                }
             }
         }
-    }
-}
-
-
     }
 
     post {
@@ -39,8 +37,5 @@ pipeline {
             echo 'Falha na execução do pipeline'
         }
     }
-
-
-
-
 }
+
