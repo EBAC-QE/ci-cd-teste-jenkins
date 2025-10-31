@@ -12,22 +12,23 @@ pipeline {
                 sh 'npm install'
             }
         }
-
-        stage('Execução dos testes') {
+        
+        stage('Rodar testes Cypress') {
             parallel {
-                steps {
-                    echo 'Executando os testes com chrome'
-                    sh 'npx cypress run --browser chrome'
+                stage('Chrome') {
+                    steps {
+                        sh 'npx cypress run --browser chrome'
+                    }
                 }
-
-                steps {
-                    echo 'Executando os testes com Electron'
-                    sh 'npx cypress run'
-                }
-
+        stage('Electron') {
+            steps {
+                sh 'npx cypress run --browser electron'
             }
-
         }
+    }
+}
+
+
     }
 
     post {
