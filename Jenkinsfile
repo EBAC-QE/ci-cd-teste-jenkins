@@ -5,6 +5,11 @@ pipeline {
         nodejs 'nodejs'
     }
 
+    environment {
+        NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
+    }
+
+
     stages {
         stage('Instalação das dependencias') {
             steps {
