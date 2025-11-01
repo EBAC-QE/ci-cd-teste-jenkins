@@ -39,7 +39,7 @@ pipeline {
 
     stage('Gerar relatório Mochawesome') {
         steps {
-            dir('hub-de-leitura-api-teste') {
+            dir('ci-cd-teste-jenkins') {
                 sh 'report-1'
                 sh 'report-2'
             archiveArtifacts artifacts: 'mochawesome-report/**/*.*', allowEmptyArchive: true
