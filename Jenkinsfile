@@ -35,7 +35,6 @@ pipeline {
 
             }
         }
-    }
 
     stage('Gerar relatório Mochawesome') {
         steps {
@@ -46,7 +45,7 @@ pipeline {
         }
     }
 }
-
+    }
 
     post {
         success {
