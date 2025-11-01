@@ -4,7 +4,8 @@
   "description": "Projeto simples para aulas de CI-CD",
   "main": "index.js",
   "scripts": {
-    "test": "npx cypress run --browser chrome"
+    "test": "npx cypress run --browser chrome", 
+    "test-chrome": "npx cypress run --browser chrome"
   },
   "repository": {
     "type": "git",
