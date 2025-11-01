@@ -7,4 +7,12 @@ module.exports = defineConfig({
     },
     video: true
   },
+  reporter: 'mochawesome',
+  reporterOptions: {
+    reportDir: 'mochawesome-report',
+    overwrite: false,
+    html: true,
+    json: true
+  }
+
 });

@@ -37,6 +37,17 @@ pipeline {
         }
     }
 
+    stage('Gerar relatório Mochawesome') {
+        steps {
+            dir('hub-de-leitura-api-teste') {
+                sh 'report-1'
+                sh 'report-2'
+            archiveArtifacts artifacts: 'mochawesome-report/**/*.*', allowEmptyArchive: true
+        }
+    }
+}
+
+
     post {
         success {
             echo 'Build e testes executados com sucesso'
@@ -46,6 +57,12 @@ pipeline {
         }
         always {
         archiveArtifacts artifacts: 'cypress/videos/**/*.*,cypress/screenshots/**/*.*', allowEmptyArchive: true
+        
+        publishHTML([ 
+            reportDir: 'ci-cd-teste-jenkins/mochawesome-report',
+            reportFiles: 'mochawesome.html',
+            reportName: 'Relatório de Testes Cypress'
+        ])
     }
     }
 

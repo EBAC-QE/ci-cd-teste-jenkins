@@ -4,11 +4,13 @@
   "description": "Projeto simples para aulas de CI-CD",
   "main": "index.js",
   "scripts": {
-    "test": "npx cypress run --browser chrome", 
-    "test-chrome": "npx cypress run --browser chrome", 
-    "teste-suite-1" : "npx cypress run --spec \"cypress/e2e/1-getting-started/*\"", 
-    "teste-suite-2" : "npx cypress run --browser chrome --spec \"cypress/e2e/2-advanced-examples/*\"", 
-    "teste-suite-3" : "npx cypress run --spec \"cypress/e2e/3-paralelo/*\""
+    "test": "npx cypress run --browser chrome",
+    "test-chrome": "npx cypress run --browser chrome",
+    "teste-suite-1": "npx cypress run --spec \"cypress/e2e/1-getting-started/*\"",
+    "teste-suite-2": "npx cypress run --browser chrome --spec \"cypress/e2e/2-advanced-examples/*\"",
+    "teste-suite-3": "npx cypress run --spec \"cypress/e2e/3-paralelo/*\"", 
+    "report-1": "npx mochawesome-merge mochawesome-report/*.json > mochawesome.json", 
+    "report-2": "npx marge mochawesome.json"
   },
   "repository": {
     "type": "git",
@@ -24,5 +26,10 @@
   "homepage": "https://github.com/EBAC-QE/ci-cd-teste-exemplo#readme",
   "dependencies": {
     "cypress": "^14.5.4"
+  },
+  "devDependencies": {
+    "mochawesome": "^7.1.4",
+    "mochawesome-merge": "^5.0.0",
+    "mochawesome-report-generator": "^6.3.0"
   }
 }
