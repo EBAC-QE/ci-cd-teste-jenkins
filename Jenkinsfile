@@ -61,7 +61,7 @@ pipeline {
             allowMissing: false,
             alwaysLinkToLastBuild: true,
             keepAll: true,
-            reportDir: 'ci-cd-teste-jenkins/mochawesome-report',
+            reportDir: 'mochawesome-report',
             reportFiles: 'mochawesome.html',
             reportName: 'Relatório de Testes Cypress'
         ])
