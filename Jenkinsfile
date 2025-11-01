@@ -58,6 +58,9 @@ pipeline {
         archiveArtifacts artifacts: 'cypress/videos/**/*.*,cypress/screenshots/**/*.*', allowEmptyArchive: true
         
         publishHTML([ 
+            allowMissing: false,
+            alwaysLinkToLastBuild: true,
+            keepAll: true,
             reportDir: 'ci-cd-teste-jenkins/mochawesome-report',
             reportFiles: 'mochawesome.html',
             reportName: 'Relatório de Testes Cypress'
