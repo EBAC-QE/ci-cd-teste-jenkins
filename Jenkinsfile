@@ -36,36 +36,39 @@ pipeline {
             }
         }
 
-    stage('Gerar relatório Mochawesome') {
-        steps {
-            dir('ci-cd-teste-jenkins') {
-                sh 'report-1'
-                sh 'report-2'
-            archiveArtifacts artifacts: 'mochawesome-report/**/*.*', allowEmptyArchive: true
+        stage('Gerar relatório Allure') {
+            steps {
+                echo '📊 Gerando relatório Allure...'
+                // gera o relatório HTML
+                sh 'npx allure generate allure-results --clean -o allure-report || true'
+                // salva como artefato opcional
+                archiveArtifacts artifacts: 'allure-report/**/*.*', allowEmptyArchive: true
+            }
         }
-    }
-}
+
+        stage('Publicar relatório no Jenkins') {
+            steps {
+                echo '🌐 Publicando relatório Allure no Jenkins...'
+                allure([
+                    includeProperties: false,
+                    jdk: '',
+                    results: [[path: 'allure-results']]
+                ])
+            }
+        }
+
     }
 
-    post {
-        success {
-            echo 'Build e testes executados com sucesso'
+        post {
+            success {
+                echo 'Build e testes executados com sucesso'
+            }
+            failure {
+                echo 'Falha na execução do pipeline'
+            }
+            always {
+            archiveArtifacts artifacts: 'cypress/videos/**/*.*,cypress/screenshots/**/*.*', allowEmptyArchive: true
         }
-        failure {
-            echo 'Falha na execução do pipeline'
-        }
-        always {
-        archiveArtifacts artifacts: 'cypress/videos/**/*.*,cypress/screenshots/**/*.*', allowEmptyArchive: true
-        
-        publishHTML([ 
-            allowMissing: false,
-            alwaysLinkToLastBuild: true,
-            keepAll: true,
-            reportDir: 'mochawesome-report',
-            reportFiles: 'mochawesome.html',
-            reportName: 'Relatório de Testes Cypress'
-        ])
-    }
     }
 
 
