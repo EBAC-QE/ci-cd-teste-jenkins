@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    tools { nodejs "node" }
+    tools { nodejs "nodejs" }
 
     environment {
         API_REPO = "https://github.com/EBAC-QE/hub-de-leitura-api.git"
