@@ -1,75 +1,36 @@
 pipeline {
     agent any
-    tools { nodejs "nodejs" }
 
-    environment {
-        API_REPO = "https://github.com/EBAC-QE/hub-de-leitura-api.git"
-        TEST_REPO = "https://github.com/EBAC-QE/hub-de-leitura-api-teste.git"
-        API_DIR = "hub-de-leitura-api"
-        TEST_DIR = "hub-de-leitura-api-teste"
+    tools {
+        nodejs 'nodejs'
     }
 
     stages {
-        stage('Clonar API') {
+        stage('Instalação das dependencias') {
             steps {
-                echo '📥 Clonando repositório da API...'
-                sh "git clone ${API_REPO}"
+                echo 'Instalando os pacotes node...'
+                sh 'npm install'
             }
         }
 
-        stage('Instalar dependências da API') {
+        stage('Execução dos testes') {
             steps {
-                dir("${API_DIR}") {
-                    sh 'npm install'
-                }
-            }
-        }
-
-        stage('Subir servidor da API') {
-            steps {
-                dir("${API_DIR}") {
-                    // inicia o servidor em background
-                    sh 'nohup npm start &'
-                }
-                // pequena espera para o servidor subir
-                sh 'sleep 8'
-            }
-        }
-
-        stage('Clonar projeto de testes') {
-            steps {
-                echo '📥 Clonando repositório de testes...'
-                sh "git clone ${TEST_REPO}"
-            }
-        }
-
-        stage('Instalar dependências dos testes') {
-            steps {
-                dir("${TEST_DIR}") {
-                    sh 'npm ci'
-                }
-            }
-        }
-
-        stage('Rodar testes automatizados') {
-            steps {
-                dir("${TEST_DIR}") {
-                    sh 'npx cypress run'
-                }
+                echo 'Executando os testes...'
+                sh 'npm test'
             }
         }
     }
 
     post {
-        always {
-            echo '🧹 Finalizando pipeline e encerrando processos Node...'
-            sh "pkill -f 'node' || true"
-        }
         success {
-            echo '✅ Testes executados com sucesso!'
+            echo 'Build e testes executados com sucesso'
         }
         failure {
-            echo '❌ Falhas detectadas durante os testes.'
+            echo 'Falha na execução do pipeline'
         }
     }
+
+
+
+
 }
