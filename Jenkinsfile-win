@@ -1,0 +1,55 @@
+pipeline {
+    agent any
+
+    tools {
+        nodejs 'nodejs'
+    }
+
+    stages {
+        stage('Instalação das dependencias') {
+            steps {
+                echo 'Instalando os pacotes node...'
+                bat 'npm install'
+            }
+        }
+
+        stage('Execução dos testes') {
+            parallel {
+                stage('Testes da suite 1') {
+                    steps {
+                        bat 'npm run teste-suite-1'
+                    }
+                }
+
+                stage('Testes da suite 2') {
+                    steps {
+                        bat 'npm run teste-suite-2'
+                    }
+                }
+
+                stage('Testes da suite 3') {
+                    steps {
+                        bat 'npm run teste-suite-3'
+                    }
+                }
+
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build e testes executados com sucesso'
+        }
+        failure {
+            echo 'Falha na execução do pipeline'
+        }
+        always {
+        archiveArtifacts artifacts: 'cypress/videos/**/*.*,cypress/screenshots/**/*.*', allowEmptyArchive: true
+    }
+    }
+
+
+
+
+}
