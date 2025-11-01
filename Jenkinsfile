@@ -44,6 +44,9 @@ pipeline {
         failure {
             echo 'Falha na execução do pipeline'
         }
+        always {
+        archiveArtifacts artifacts: 'cypress/videos/**/*.*,cypress/screenshots/**/*.*', allowEmptyArchive: true
+    }
     }
 
 
